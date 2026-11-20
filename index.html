@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PORTOFOLIO — Najwan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --community-bg: #d946ef;
+      --card-bg: #111115;
+      --text-main: #ffffff;
+      --accent-green: #22c55e;
+      --avatar-size: 108px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--community-bg);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ================= TOP MUSIC BAR (TANPA TOMBOL ATUR PROFIL) ================= */
+    .top-bar {
+      position: fixed;
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .pill-control {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 20, 28, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 10px;
+      padding: 7px 13px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      user-select: none;
+    }
+
+    .pill-control:hover {
+      background: rgba(34, 34, 48, 0.92);
+      transform: translateY(-1px);
+    }
+
+    .eq-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+
+    .eq-bars span {
+      width: 2.5px;
+      background: #60a5fa;
+      border-radius: 2px;
+      animation: eqBounce 0.9s infinite ease-in-out;
+    }
+
+    .eq-bars span:nth-child(1) { height: 5px; animation-delay: 0s; }
+    .eq-bars span:nth-child(2) { height: 11px; animation-delay: 0.2s; }
+    .eq-bars span:nth-child(3) { height: 7px; animation-delay: 0.4s; }
+
+    .pill-control.muted .eq-bars span {
+      animation: none;
+      height: 3px;
+      background: #9ca3af;
+    }
+
+    @keyframes eqBounce {
+      0%, 100% { height: 4px; }
+      50% { height: 12px; }
+    }
+
+    .song-title-pill {
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: default;
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 76px 20px 44px;
+      overflow: hidden;
+      background-color: #161426;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: brightness(0.72) contrast(1.06);
+      z-index: 1;
+    }
+
+    .hero-crt-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background-image:
+        radial-gradient(rgba(18, 16, 36, 0.55) 1.15px, transparent 1.15px),
+        linear-gradient(to bottom, rgba(16, 14, 30, 0.25) 0%, rgba(16, 14, 30, 0.45) 85%, rgba(217, 70, 239, 0.22) 100%);
+      background-size: 4px 4px, 100% 100%;
+    }
+
+    .hero-character {
+      position: absolute;
+      bottom: 0;
+      z-index: 3;
+      height: 88%;
+      max-height: 465px;
+      width: auto;
+      object-fit: contain;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.55));
+    }
+
+    .hero-character.left {
+      left: 2%;
+      animation: characterFloat 4.4s ease-in-out -1.6s infinite;
+    }
+
+    .hero-character.right {
+      right: 2%;
+      animation: characterFloat 5s ease-in-out -2.2s infinite;
+    }
+
+    @keyframes characterFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .hero-center {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .portfolio-heading {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(20px, 2.6vw, 27px);
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--accent-green);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      margin-bottom: 14px;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      background: #1e1b2e;
+    }
+
+    .speech-bubble {
+      position: absolute;
+      top: -22px;
+      right: -34px;
+      background: #ffffff;
+      color: #18181b;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 15px;
+      border-radius: 50%;
+      min-width: 52px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 5;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 10px;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .speech-bubble.collapsed {
+      padding: 8px 13px;
+      letter-spacing: 1.5px;
+    }
+
+    .profile-name {
+      font-size: clamp(32px, 4.5vw, 44px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text-main);
+      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.8);
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+      margin-bottom: 16px;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .social-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .my-game-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: var(--text-main);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .my-game-list {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(13px, 1.85vw, 19px);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      color: var(--text-main);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 1);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    /* ================= BAGIAN KOMUNITAS ================= */
+    .community-section {
+      width: 100%;
+      background: var(--community-bg);
+      padding: 14px 0 36px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .community-header {
+      max-width: 1360px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .community-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.2px;
+    }
+
+    .pause-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(24, 16, 36, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .pause-btn:hover {
+      background: rgba(24, 16, 36, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .marquee-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .marquee-row {
+      display: flex;
+      width: max-content;
+      gap: 0;
+      will-change: transform;
+    }
+
+    .marquee-row.move-right {
+      animation: scrollRight 34s linear infinite;
+    }
+
+    .marquee-row.move-left {
+      animation: scrollLeft 34s linear infinite;
+    }
+
+    .marquee-wrapper:hover .marquee-row,
+    .marquee-wrapper.paused .marquee-row {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
+    }
+
+    @keyframes scrollLeft {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-group {
+      display: grid;
+      grid-template-columns: repeat(4, 310px);
+      gap: 18px;
+      padding-right: 18px;
+    }
+
+    .community-card {
+      background-color: var(--card-bg);
+      border-radius: 18px;
+      padding: 20px;
+      min-height: 225px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.22s ease, border-color 0.22s ease;
+    }
+
+    .community-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #1f1f27;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      font-size: 12.8px;
+      line-height: 1.6;
+      color: var(--text-main);
+      opacity: 0.76;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-character { height: 72%; opacity: 0.9; }
+      .hero-character.left { left: -2%; }
+      .hero-character.right { right: -2%; }
+    }
+
+    @media (max-width: 720px) {
+      .hero { min-height: 480px; padding-top: 72px; }
+      .hero-character { height: 54%; opacity: 0.65; }
+      .marquee-group { grid-template-columns: repeat(4, 270px); }
+      .song-title-pill { max-width: 155px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-character { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <button id="musicToggleBtn" class="pill-control" type="button" aria-label="Nyalakan atau matikan musik">
+      <span class="eq-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <span id="musicStatusText">On</span>
+    </button>
+    <div id="songPill" class="pill-control song-title-pill">
+      <span>🎵</span>
+      <span id="songTitleDisplay">Hope Is the Thing With Feathers_320k</span>
+    </div>
+  </header>
+
+  <audio id="bgMusic" loop preload="auto"></audio>
+
+  <section class="hero" id="heroSection">
+    <img id="heroWallpaper" class="hero-bg" src="" alt="Hero Background" />
+    <div class="hero-crt-overlay"></div>
+
+    <img id="charLeftImg" class="hero-character left" src="" alt="Karakter Kiri" />
+    <img id="charRightImg" class="hero-character right" src="" alt="Karakter Kanan" />
+
+    <div class="hero-center">
+      <h1 id="portfolioTitle" class="portfolio-heading">PORTOFOLIO</h1>
+
+      <div class="avatar-wrapper">
+        <img id="avatarImg" class="avatar-img" src="" alt="Avatar Najwan" />
+        <div id="speechBubble" class="speech-bubble">Hii</div>
+      </div>
+
+      <h2 id="profileName" class="profile-name">Najwan</h2>
+      <p id="profileRole" class="profile-role">Kreator Game</p>
+
+      <nav id="socialLinksContainer" class="social-links" aria-label="Tautan Sosial dan Game"></nav>
+
+      <h3 id="myGameHeading" class="my-game-title">MY GAME</h3>
+      <p id="myGameList" class="my-game-list"></p>
+    </div>
+  </section>
+
+  <section class="community-section">
+    <div class="community-header">
+      <h2 class="community-title">Jelajahi komunitas</h2>
+      <button id="pauseMotionBtn" class="pause-btn" type="button">
+        <span id="pauseIcon">❚❚</span>
+        <span id="pauseText">Jeda gerakan</span>
+      </button>
+    </div>
+
+    <div id="marqueeWrapper" class="marquee-wrapper">
+      <div id="rowTop" class="marquee-row move-right"></div>
+      <div id="rowBottom" class="marquee-row move-left"></div>
+    </div>
+  </section>
+
+  <script>
+    /* =========================================================================
+       DATA KUSTOMISASI PEMILIK
+       Edit data dan file di assets/ di bawah untuk menyesuaikan portofolio.
+       ========================================================================= */
+    const PORTFOLIO_DATA = {
+      theme: {
+        communityBackground: "#d946ef",
+        textColor: "#ffffff",
+        avatarSize: "108px"
+      },
+      music: {
+        title: "Hope Is the Thing With Feathers",
+        shortTitle: "Hope Is the Thing With Feathers",
+        src: "assets/hope-is-the-thing-with-feathers.mp3",
+        defaultOn: true
+      },
+      hero: {
+        portfolioTitle: "PORTOFOLIO",
+        wallpaper: "assets/hero-wallpaper.gif",
+        characterLeft: "assets/character-left.png",
+        characterRight: "assets/character-right.png",
+        avatar: "assets/avatar-firefly.gif",
+        bubbleText: "Hii",
+        bubbleCollapsedText: "...",
+        name: "Najwan",
+        role: "Kreator Game",
+        myGameHeading: "MY GAME",
+        gamesText: "GENSHIN,HSR,HI3,ZZZ,WUWA,STRINOVA,BLUEARCHIVE,NTE,COC"
+      },
+      socialLinks: [
+        { name: "Discord", icon: "assets/discord.jpg", url: "https://discord.com/users/782283099467415553" },
+        { name: "TikTok", icon: "assets/tiktok.jfif", url: "https://www.tiktok.com/@najwan816?is_from_webapp=1&sender_device=pc" },
+        { name: "YouTube", icon: "assets/youtube.jfif", url: "https://www.youtube.com/@najwana9678" },
+        { name: "HoYoLAB", icon: "assets/hoyolab-firefly.jfif", url: "https://www.hoyolab.com/accountCenter/postList?id=75141180" }
+      ],
+      communityCards: [
+        {
+          title: "Honkai Star rail",
+          icon: "assets/honkai-star-rail.jfif",
+          description: "Honkai: Star Rail is a turn-based RPG set in a space-fantasy universe, developed and published by miHoYo (known as HoYoverse outside of China)."
+        },
+        {
+          title: "Honkai impact 3Rd",
+          icon: "assets/honkai-impact-3rd.jfif",
+          description: "Honkai Impact 3rd is a free-to-play 3D action RPG developed by miHoYo and serves as a continuation of the Honkai Gakuen series."
+        },
+        {
+          title: "Zenless Zone Zero",
+          icon: "assets/zenless-zone-zero.jfif",
+          description: "Zenless Zone Zero is an urban fantasy action role-playing game (ARPG) developed and published by miHoYo (HoYoverse)"
+        },
+        {
+          title: "Genshin Impact",
+          icon: "assets/genshin-impact.jfif",
+          description: "Genshin Impact is a free-to-play open-world action RPG developed by miHoYo, in which players take on the role of a traveler exploring Teyvat in search of their lost sibling."
+        },
+        {
+          title: "Strinova",
+          icon: "assets/strinova.jfif",
+          description: "Strinova is an anime-styled tactical third-person hero shooter developed by iDreamSky and released for PC; it features a unique stringification mechanic allowing characters to switch between 3D and 2D forms."
+        },
+        {
+          title: "Blue Archive",
+          icon: "assets/blue-archive.jfif",
+          description: "Blue Archive is an anime-themed strategy RPG in which players take on the role of a teacher who leads schoolgirls on tactical missions within the academic city of Kivotos."
+        },
+        {
+          title: "Wuthering Waves",
+          icon: "assets/wuthering-waves.jfif",
+          description: "Wuthering Waves is a free-to-play open-world action role-playing game (ARPG) developed and published by Kuro Games, the same developer behind Punishing: Gray Raven."
+        },
+        {
+          title: "Neverness to Everness",
+          icon: "assets/neverness-to-everness.jfif",
+          description: "NTE: Neverness to Everness is an open-world, hack-and-slash action role-playing game developed by Hotta Studio (the developer of Tower of Fantasy) and published by Perfect World Games."
+        }
+      ]
+    };
+
+    function initPortfolio() {
+      const root = document.documentElement;
+      root.style.setProperty("--community-bg", PORTFOLIO_DATA.theme.communityBackground);
+      root.style.setProperty("--text-main", PORTFOLIO_DATA.theme.textColor);
+      root.style.setProperty("--avatar-size", PORTFOLIO_DATA.theme.avatarSize);
+
+      document.getElementById("portfolioTitle").textContent = PORTFOLIO_DATA.hero.portfolioTitle;
+      document.getElementById("heroWallpaper").src = PORTFOLIO_DATA.hero.wallpaper;
+      document.getElementById("charLeftImg").src = PORTFOLIO_DATA.hero.characterLeft;
+      document.getElementById("charRightImg").src = PORTFOLIO_DATA.hero.characterRight;
+      document.getElementById("avatarImg").src = PORTFOLIO_DATA.hero.avatar;
+      document.getElementById("speechBubble").textContent = PORTFOLIO_DATA.hero.bubbleText;
+      document.getElementById("profileName").textContent = PORTFOLIO_DATA.hero.name;
+      document.getElementById("profileRole").textContent = PORTFOLIO_DATA.hero.role;
+      document.getElementById("myGameHeading").textContent = PORTFOLIO_DATA.hero.myGameHeading;
+      document.getElementById("myGameList").textContent = PORTFOLIO_DATA.hero.gamesText;
+
+      const socialContainer = document.getElementById("socialLinksContainer");
+      socialContainer.innerHTML = PORTFOLIO_DATA.socialLinks
+        .map(
+          (item) => `
+            <a class="social-btn" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.name}" aria-label="${item.name}">
+              <img src="${item.icon}" alt="${item.name}" />
+            </a>
+          `
+        )
+        .join("");
+
+      const topCards = PORTFOLIO_DATA.communityCards.slice(0, 4);
+      const bottomCards = PORTFOLIO_DATA.communityCards.slice(4, 8);
+
+      const createGroupHTML = (cards) => `
+        <div class="marquee-group">
+          ${cards
+            .map(
+              (card) => `
+                <article class="community-card">
+                  <div class="card-top">
+                    <img class="card-icon" src="${card.icon}" alt="${card.title}" />
+                    <h3 class="card-title">${card.title}</h3>
+                  </div>
+                  <p class="card-desc">${card.description}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </div>
+      `;
+
+      document.getElementById("rowTop").innerHTML = createGroupHTML(topCards) + createGroupHTML(topCards);
+      document.getElementById("rowBottom").innerHTML = createGroupHTML(bottomCards) + createGroupHTML(bottomCards);
+
+      const audioEl = document.getElementById("bgMusic");
+      const toggleBtn = document.getElementById("musicToggleBtn");
+      const statusText = document.getElementById("musicStatusText");
+      const songDisplay = document.getElementById("songTitleDisplay");
+      const songPill = document.getElementById("songPill");
+
+      songDisplay.textContent = PORTFOLIO_DATA.music.shortTitle;
+      songPill.title = PORTFOLIO_DATA.music.title;
+      audioEl.src = PORTFOLIO_DATA.music.src;
+
+      let isMusicOn = PORTFOLIO_DATA.music.defaultOn;
+
+      function updateMusicUI() {
+        statusText.textContent = isMusicOn ? "On" : "Off";
+        toggleBtn.classList.toggle("muted", !isMusicOn);
+      }
+
+      async function playMusic() {
+        try {
+          await audioEl.play();
+          isMusicOn = true;
+          toggleBtn.title = "Matikan musik";
+        } catch (error) {
+          isMusicOn = false;
+          toggleBtn.title = `Musik gagal diputar: ${error.message}`;
+        }
+        updateMusicUI();
+      }
+
+      updateMusicUI();
+      if (isMusicOn) playMusic();
+
+      toggleBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (isMusicOn && !audioEl.paused) {
+          isMusicOn = false;
+          audioEl.pause();
+          toggleBtn.title = "Nyalakan musik";
+          updateMusicUI();
+        } else {
+          isMusicOn = true;
+          updateMusicUI();
+          playMusic();
+        }
+      });
+
+      const pauseBtn = document.getElementById("pauseMotionBtn");
+      const pauseIcon = document.getElementById("pauseIcon");
+      const pauseText = document.getElementById("pauseText");
+      const marqueeWrapper = document.getElementById("marqueeWrapper");
+      let isPaused = false;
+
+      pauseBtn.addEventListener("click", () => {
+        isPaused = !isPaused;
+        marqueeWrapper.classList.toggle("paused", isPaused);
+        pauseIcon.textContent = isPaused ? "▶" : "❚❚";
+        pauseText.textContent = isPaused ? "Lanjutkan gerakan" : "Jeda gerakan";
+      });
+
+      const speechBubble = document.getElementById("speechBubble");
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (window.scrollY > 35) {
+            speechBubble.textContent = PORTFOLIO_DATA.hero.bubbleCollapsedText;
+            speechBubble.classList.add("collapsed");
+          } else {
+            speechBubble.textContent = PORTFOLIO_DATA.hero.bubbleText;
+            speechBubble.classList.remove("collapsed");
+          }
+        },
+        { passive: true }
+      );
+    }
+
+    initPortfolio();
+  </script>
+</body>
+</html>
